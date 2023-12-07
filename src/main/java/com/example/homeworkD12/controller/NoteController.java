@@ -7,6 +7,7 @@ import com.example.homeworkD12.service.service.NoteService;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,7 +42,7 @@ public class NoteController {
 
     @PostMapping("/create")
     public ModelAndView createNote(
-            @RequestParam(value = "title") String title,
+            @RequestParam(value = "title") @Size(min = 1, max = 15) String title,
             @RequestParam(value = "content") @NotBlank String content) {
         NoteDto dto = new NoteDto();
         dto.setTitle(title);
@@ -53,7 +54,7 @@ public class NoteController {
     @PostMapping("/edit")
     public ModelAndView updateNote(
             @NotNull @RequestParam(value = "id") String id,
-            @RequestParam(value = "title") String title,
+            @Size(min = 1, max = 250) @RequestParam(value = "title") String title,
             @NotEmpty @RequestParam(value = "content") String content) throws NoteNotFoundException {
         NoteDto dto = new NoteDto();
         dto.setId(UUID.fromString(id));
