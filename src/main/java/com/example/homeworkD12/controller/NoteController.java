@@ -32,7 +32,7 @@ public class NoteController {
     }
 
     @GetMapping("/edit")
-    public ModelAndView getNoteForEdit(@NotEmpty @RequestParam(value = "id") String id) throws NoteNotFoundException {
+    public ModelAndView getNoteForEdit(@NotNull @RequestParam(value = "id") String id) throws NoteNotFoundException {
         UUID uuid = UUID.fromString(id);
         ModelAndView result = new ModelAndView("note/updateNotes");
         result.addObject("note", noteMapper.toNoteResponse(noteService.getById(uuid)));
@@ -50,7 +50,7 @@ public class NoteController {
         return noteList();
     }
 
-    @PostMapping("/update")
+    @PostMapping("/edit")
     public ModelAndView updateNote(
             @NotNull @RequestParam(value = "id") String id,
             @RequestParam(value = "title") String title,
@@ -64,7 +64,7 @@ public class NoteController {
     }
 
     @PostMapping("/delete")
-    public ModelAndView deleteNote(@RequestParam("id") UUID id) throws NoteNotFoundException {
+    public ModelAndView deleteNote(@NotNull @RequestParam("id") UUID id) throws NoteNotFoundException {
         noteService.deleteById(id);
         return noteList();
     }
